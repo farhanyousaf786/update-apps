@@ -143,61 +143,61 @@ class _DashBoardState extends State<DashBoard> {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 10, right: 10, top: 12),
-
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-
-
-                    Row(children: [
-                      Container(
-                      height: 120,
-                      width: MediaQuery.of(context).size.width/2.5,
-                      child: TextButton(
-                        onPressed: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => AppsListScreen()));
-                        },
-                        child: Material(
-                          elevation: 8,
-                          borderRadius: BorderRadius.circular(15),
-                          child: Center(
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  Image.asset(
-                                    'assets/images/apps.png',
-                                    width: 40,
-                                    height: 40,
-                                  ),
-                                  const SizedBox(height: 10),
-                                  Text(
-                                    "User Apps",
-                                    style: TextStyle(
-                                        color: Colors.blue.shade700,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'bal'),
-                                  ),
-                                ],
-                              )),
-                        ),
-                      ),
-                    ),
-                      Container(
-                        height: 120,
-                        width: MediaQuery.of(context).size.width/2.5,
-                        child: TextButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => SystemAppsListScreen()));
-                          },
-                          child: Material(
-                            elevation: 8,
-                            borderRadius: BorderRadius.circular(15),
-                            child: Center(
-                                child: Column(
+                padding: const EdgeInsets.only(left: 10, right: 10, top: 12),
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => AppsListScreen()));
+                              },
+                              child: Material(
+                                elevation: 8,
+                                borderRadius: BorderRadius.circular(15),
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/apps.png',
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "User Apps",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade700,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'bal'),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        SystemAppsListScreen()));
+                              },
+                              child: Material(
+                                elevation: 8,
+                                borderRadius: BorderRadius.circular(15),
+                                child: Center(
+                                    child: Column(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
                                     Image.asset(
@@ -216,137 +216,164 @@ class _DashBoardState extends State<DashBoard> {
                                     ),
                                   ],
                                 )),
+                              ),
+                            ),
                           ),
-                        ),
-                      ),],),
-
-
-
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => UninstallAppsListScreen()));
-                      },
-                      child: Material(
-                        elevation: 8,
-                        borderRadius: BorderRadius.circular(15),
-                        child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/delete_app.png',
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  "Un-install App",
-                                  style: TextStyle(
-                                      color: Colors.blue.shade700,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'bal'),
-                                ),
-                              ],
-                            )),
+                        ],
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        SystemSettings.deviceInfo();
-                      },
-                      child: Material(
-                        elevation: 8,
-                        borderRadius: BorderRadius.circular(15),
-                        child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/system_update.png',
-                                  width: 40,
-                                  height: 40.0,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  "System Update",
-                                  style: TextStyle(
-                                      color: Colors.blue.shade700,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'bal'),
-                                ),
-                              ],
-                            )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        UninstallAppsListScreen()));
+                              },
+                              child: Material(
+                                elevation: 8,
+                                borderRadius: BorderRadius.circular(15),
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/delete_app.png',
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "Un-install App",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade700,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'bal'),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: TextButton(
+                              onPressed: () {
+                                SystemSettings.deviceInfo();
+                              },
+                              child: Material(
+                                elevation: 8,
+                                borderRadius: BorderRadius.circular(15),
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/system_update.png',
+                                      width: 40,
+                                      height: 40.0,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "System Update",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade700,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'bal'),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const DeviceInfoScreen()));
-                      },
-                      child: Material(
-                        elevation: 8,
-                        borderRadius: BorderRadius.circular(20),
-                        child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/cpu.png',
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  "Processor",
-                                  style: TextStyle(
-                                      color: Colors.blue.shade700,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'bal'),
-                                ),
-                              ],
-                            )),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: TextButton(
+                              onPressed: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) =>
+                                        const DeviceInfoScreen()));
+                              },
+                              child: Material(
+                                elevation: 8,
+                                borderRadius: BorderRadius.circular(20),
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/cpu.png',
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "Processor",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade700,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'bal'),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            ),
+                          ),
+                          Container(
+                            height: 120,
+                            width: MediaQuery.of(context).size.width / 2.5,
+                            child: TextButton(
+                              onPressed: () {
+                                _launchURL(
+                                    "https://play.google.com/store/apps/details?id=com.ushnfay.todo");
+                              },
+                              child: Material(
+                                elevation: 8,
+                                borderRadius: BorderRadius.circular(15),
+                                child: Center(
+                                    child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Image.asset(
+                                      'assets/images/storage.png',
+                                      width: 40,
+                                      height: 40,
+                                    ),
+                                    const SizedBox(height: 10),
+                                    Text(
+                                      "To-Do App",
+                                      style: TextStyle(
+                                          color: Colors.blue.shade700,
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'bal'),
+                                    ),
+                                  ],
+                                )),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        _launchURL(
-                            "https://play.google.com/store/apps/details?id=com.ushnfay.todo");
-                      },
-                      child: Material(
-                        elevation: 8,
-                        borderRadius: BorderRadius.circular(15),
-                        child: Center(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  'assets/images/storage.png',
-                                  width: 40,
-                                  height: 40,
-                                ),
-                                const SizedBox(height: 10),
-                                Text(
-                                  "To-Do App",
-                                  style: TextStyle(
-                                      color: Colors.blue.shade700,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'bal'),
-                                ),
-                              ],
-                            )),
-                      ),
-                    ),
-                    SizedBox(height: 300,)
-
-                  ],
-                ),
-              )
-            ),
+                      SizedBox(
+                        height: MediaQuery.of(context).size.height / 1.5,
+                      )
+                    ],
+                  ),
+                )),
           ),
         ),
       ),
