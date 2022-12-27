@@ -26,14 +26,11 @@ class _SystemAppsListScreen extends State<SystemAppsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade600,
+      backgroundColor: Colors.blue.shade600,
       appBar: AppBar(
-        elevation: 8,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+        backgroundColor: Colors.blue,
+        elevation: 0.0,
+
         centerTitle: true,
         title: const Text('Update Apps'),
       ),
@@ -101,7 +98,7 @@ class _AppsListScreenContent extends StatelessWidget {
                   }
                   return Scrollbar(
                     child: Container(
-                      color: Colors.green,
+                      color: Colors.blue.shade700,
                       padding: const EdgeInsets.all(10),
                       child: ListView.builder(
                           itemBuilder: (BuildContext context, int position) {
@@ -254,7 +251,7 @@ class _AppsListScreenContent extends StatelessWidget {
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<
-                                                      Color>(Colors.green),
+                                                      Color>(Colors.blue),
                                               minimumSize: MaterialStateProperty
                                                   .all<Size>(Size(
                                                       double.infinity, 40))),

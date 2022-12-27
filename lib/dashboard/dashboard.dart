@@ -14,8 +14,6 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
-
-
   /// This function will lead us to browser to run a url.
   _launchURL(String url) async {
     if (await canLaunch(url)) {
@@ -45,6 +43,7 @@ class _DashBoardState extends State<DashBoard> {
               color: Colors.white,
               fontWeight: FontWeight.w700,
               fontSize: 20,
+              fontFamily: 'bal'
             ),
           ),
           actions: [
@@ -71,19 +70,21 @@ class _DashBoardState extends State<DashBoard> {
           ),
           child: Center(
             child: Padding(
-              padding: const EdgeInsets.only(left: 12, right: 12, top: 10),
+              padding: const EdgeInsets.only(left: 10, right: 10, top: 12),
               child: GridView.count(
                   primary: false,
                   padding: const EdgeInsets.all(15),
-                  crossAxisSpacing: 50,
-                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 30,
+                  mainAxisSpacing: 15,
                   crossAxisCount: 2,
                   children: <Widget>[
                     TextButton(
+
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
                             builder: (context) => AppsListScreen()));
                       },
+
                       child: Material(
                         elevation: 8,
                         borderRadius: BorderRadius.circular(15),
@@ -99,8 +100,11 @@ class _DashBoardState extends State<DashBoard> {
                             const SizedBox(height: 10),
                             Text(
                               "User Apps",
-                              style: TextStyle(color: Colors.blue.shade700),
-                            ),
+                              style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'bal'),                            ),
                           ],
                         )),
                       ),
@@ -126,8 +130,10 @@ class _DashBoardState extends State<DashBoard> {
                             Text(
                               "System Apps",
                               style: TextStyle(
-                                color: Colors.blue.shade600,
-                              ),
+                                  color: Colors.blue.shade700,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'bal'),
                             ),
                           ],
                         )),
@@ -153,8 +159,11 @@ class _DashBoardState extends State<DashBoard> {
                             const SizedBox(height: 10),
                             Text(
                               "Un-install App",
-                              style: TextStyle(color: Colors.blue.shade600),
-                            ),
+                              style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'bal'),                            ),
                           ],
                         )),
                       ),
@@ -178,8 +187,11 @@ class _DashBoardState extends State<DashBoard> {
                             const SizedBox(height: 10),
                             Text(
                               "System Update",
-                              style: TextStyle(color: Colors.blue.shade700),
-                            ),
+                              style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'bal'),                            ),
                           ],
                         )),
                       ),
@@ -204,7 +216,11 @@ class _DashBoardState extends State<DashBoard> {
                             const SizedBox(height: 10),
                             Text(
                               "Processor",
-                              style: TextStyle(color: Colors.blue.shade600),
+                              style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'bal'),
                             ),
                           ],
                         )),
@@ -230,7 +246,11 @@ class _DashBoardState extends State<DashBoard> {
                             const SizedBox(height: 10),
                             Text(
                               "To-Do App",
-                              style: TextStyle(color: Colors.blue.shade700),
+                              style: TextStyle(
+                                  color: Colors.blue.shade700,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'bal'),
                             ),
                           ],
                         )),
@@ -241,7 +261,6 @@ class _DashBoardState extends State<DashBoard> {
           ),
         ),
       ),
-
     ]);
   }
 }

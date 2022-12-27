@@ -175,42 +175,40 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.green.shade500,
-
+        backgroundColor: Colors.blue.shade500,
         appBar: AppBar(
-          elevation: 8,
-          shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(
-              bottom: Radius.circular(30),
-            ),
-          ),
-          centerTitle:  true,
+          elevation: 0.0,
+          backgroundColor: Colors.blue,
+          centerTitle: true,
           title: Text(
             kIsWeb
                 ? 'Web Browser info'
                 : Platform.isAndroid
-                ? 'Android Device Info'
-                : Platform.isIOS
-                ? 'iOS Device Info'
-                : Platform.isLinux
-                ? 'Linux Device Info'
-                : Platform.isMacOS
-                ? 'MacOS Device Info'
-                : Platform.isWindows
-                ? 'Windows Device Info'
-                : '',
+                    ? 'Android Device Info'
+                    : Platform.isIOS
+                        ? 'iOS Device Info'
+                        : Platform.isLinux
+                            ? 'Linux Device Info'
+                            : Platform.isMacOS
+                                ? 'MacOS Device Info'
+                                : Platform.isWindows
+                                    ? 'Windows Device Info'
+                                    : '',
+            style: TextStyle(fontFamily: 'bal', fontWeight: FontWeight.w700),
           ),
         ),
         body: Padding(
           padding: const EdgeInsets.only(top: 15),
           child: ListView.builder(
-            itemBuilder: (BuildContext context, int index){
+            itemBuilder: (BuildContext context, int index) {
               String key = _deviceData.keys.elementAt(index);
 
               return Container(
                   padding: const EdgeInsets.all(10),
-                  color: index%2==0?Colors.green.withOpacity(0.5):Colors.grey.withOpacity(0.5),
-                  child:Row(
+                  color: index % 2 == 0
+                      ? Colors.blue.withOpacity(0.5)
+                      : Colors.white.withOpacity(0.5),
+                  child: Row(
                     children: <Widget>[
                       Container(
                         padding: const EdgeInsets.all(10.0),
@@ -223,49 +221,49 @@ class _DeviceInfoScreenState extends State<DeviceInfoScreen> {
                       ),
                       Expanded(
                           child: Container(
-                            padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-                            child: Text(
-                              '${_deviceData[key]}',
-                              maxLines: 10,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          )),
+                        padding:
+                            const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                        child: Text(
+                          '${_deviceData[key]}',
+                          maxLines: 10,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      )),
                     ],
-                  )
-              );
+                  ));
             },
             itemCount: _deviceData.length,
           ),
         )
-      // ListView(
-      //   children: _deviceData.keys.map(
-      //         (String property) {
-      //       return
-      //       Row(
-      //         children: <Widget>[
-      //           Container(
-      //             padding: const EdgeInsets.all(10.0),
-      //             child: Text(
-      //               property,
-      //               style: const TextStyle(
-      //                 fontWeight: FontWeight.bold,
-      //               ),
-      //             ),
-      //           ),
-      //           Expanded(
-      //               child: Container(
-      //                 padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
-      //                 child: Text(
-      //                   '${_deviceData[property]}',
-      //                   maxLines: 10,
-      //                   overflow: TextOverflow.ellipsis,
-      //                 ),
-      //               )),
-      //         ],
-      //       );
-      //     },
-      //   ).toList(),
-      // ),
-    );
+        // ListView(
+        //   children: _deviceData.keys.map(
+        //         (String property) {
+        //       return
+        //       Row(
+        //         children: <Widget>[
+        //           Container(
+        //             padding: const EdgeInsets.all(10.0),
+        //             child: Text(
+        //               property,
+        //               style: const TextStyle(
+        //                 fontWeight: FontWeight.bold,
+        //               ),
+        //             ),
+        //           ),
+        //           Expanded(
+        //               child: Container(
+        //                 padding: const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+        //                 child: Text(
+        //                   '${_deviceData[property]}',
+        //                   maxLines: 10,
+        //                   overflow: TextOverflow.ellipsis,
+        //                 ),
+        //               )),
+        //         ],
+        //       );
+        //     },
+        //   ).toList(),
+        // ),
+        );
   }
 }

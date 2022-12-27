@@ -78,7 +78,7 @@ class AppDetailsScreen extends StatelessWidget {
                             ,SizedBox(height: 10,),
                           ],
                         ),
-                        const VerticalDivider(color: Colors.green,thickness: 1.5,),
+                        const VerticalDivider(color: Colors.blue,thickness: 1.5,),
                         Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,

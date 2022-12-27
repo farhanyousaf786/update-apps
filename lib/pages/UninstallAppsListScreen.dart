@@ -18,17 +18,17 @@ class _UninstallAppsListScreen extends State<UninstallAppsListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green.shade600,
+      backgroundColor: Colors.blue.shade600,
 
       appBar: AppBar(
-        elevation: 8,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.vertical(
-            bottom: Radius.circular(30),
-          ),
-        ),
+        elevation: 0.0,
+        backgroundColor: Colors.blue,
         centerTitle:  true,
-        title: const Text('Uninstall Apps'),
+        title: const Text('Uninstall Apps',
+        style: TextStyle(
+          fontFamily: 'bal',
+          fontWeight: FontWeight.w700
+        ),),
       ),
       body: _AppsListScreenContent(
           includeSystemApps: _showSystemApps,
@@ -94,7 +94,7 @@ class _AppsListScreenContent extends StatelessWidget {
                   }
                   return Scrollbar(
                     child: Container(
-                      color: Colors.green.shade600,
+                      color: Colors.blue.shade600,
                       padding: const EdgeInsets.all(10),
                       child: ListView.builder(
                           itemBuilder: (BuildContext context, int position) {
@@ -235,7 +235,7 @@ class _AppsListScreenContent extends StatelessWidget {
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<
-                                                      Color>(Colors.green.shade600,),
+                                                      Color>(Colors.blue.shade600,),
                                               minimumSize: MaterialStateProperty
                                                   .all<Size>(const Size(
                                                       double.infinity, 40))),
