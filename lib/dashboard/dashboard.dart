@@ -1,4 +1,5 @@
 import 'package:facebook_audience_network/facebook_audience_network.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../pages/AppsListScreen.dart';
 import '../pages/SystemAppsListScreen.dart';
@@ -19,74 +20,95 @@ class _DashBoardState extends State<DashBoard> {
   void initState() {
     FacebookAudienceNetwork.init();
     _loadInterstitialAd();
-    _showNativeAd();
-    // Future.delayed(const Duration(seconds: 30), () {
-    //   _showInterstitialAd();
-    //
-    // });
+    myBanner.load();
+
+    // _showNativeAd();
+    Future.delayed(const Duration(seconds: 10), () {
+      _interstitialAd?.show();
+    });
 
     super.initState();
   }
 
-  bool _isInterstitialAdLoaded = false;
-
-  void _loadInterstitialAd() {
-    FacebookInterstitialAd.loadInterstitialAd(
-      placementId: "1336093853816192_1336095053816072",
-      listener: (result, value) {
-        print(">> FAN > Interstitial Ad: $result --> $value");
-        if (result == InterstitialAdResult.LOADED)
-          _isInterstitialAdLoaded = true;
-
-        /// Once an Interstitial Ad has been dismissed and becomes invalidated,
-        /// load a fresh Ad by calling this function.
-        if (result == InterstitialAdResult.DISMISSED &&
-            value["invalidated"] == true) {
-          _isInterstitialAdLoaded = false;
-          _loadInterstitialAd();
-        }
-      },
-    );
-  }
-
-  _showInterstitialAd() {
-    if (_isInterstitialAdLoaded == true)
-      FacebookInterstitialAd.showInterstitialAd();
-    else
-      print("Interstial Ad not yet loaded!");
-  }
-
-  Widget _currentAd = SizedBox(
-    width: 0.0,
-    height: 0.0,
+  final BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-5525086149175557/9611255731',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
   );
 
-  _showNativeAd() {
-    setState(() {
-      _currentAd = _nativeAd();
-    });
-  }
+  final BannerAdListener listener = BannerAdListener(
+    // Called when an ad is successfully received.
+    onAdLoaded: (Ad ad) => print('Ad loaded.'),
+    // Called when an ad request failed.
+    onAdFailedToLoad: (Ad ad, LoadAdError error) {
+      // Dispose the ad here to free resources.
+      ad.dispose();
+      print('Ad failed to load: $error');
+    },
+    // Called when an ad opens an overlay that covers the screen.
+    onAdOpened: (Ad ad) => print('Ad opened.'),
+    // Called when an ad removes an overlay that covers the screen.
+    onAdClosed: (Ad ad) => print('Ad closed.'),
+    // Called when an impression occurs on the ad.
+    onAdImpression: (Ad ad) => print('Ad impression.'),
+  );
 
-  Widget _nativeAd() {
-    return FacebookNativeAd(
-      //1316724952486390_1316726822486203
-      placementId: "1336093853816192_1336094377149473",
-      adType: NativeAdType.NATIVE_AD_VERTICAL,
-      width: double.infinity,
-      height: 300,
-      backgroundColor: Colors.blue,
-      titleColor: Colors.white,
-      descriptionColor: Colors.white,
-      buttonColor: Colors.deepPurple,
-      buttonTitleColor: Colors.white,
-      buttonBorderColor: Colors.white,
-      listener: (result, value) {
-        print("Native Ad: $result --> $value");
-      },
-      keepExpandedWhileLoading: true,
-      expandAnimationDuraion: 1000,
+// TODO: Add _interstitialAd
+  InterstitialAd? _interstitialAd;
+
+  // TODO: Implement _loadInterstitialAd()
+  void _loadInterstitialAd() {
+    InterstitialAd.load(
+      adUnitId: "ca-app-pub-5525086149175557/3237419076",
+      request: AdRequest(),
+      adLoadCallback: InterstitialAdLoadCallback(
+        onAdLoaded: (ad) {
+          ad.fullScreenContentCallback = FullScreenContentCallback(
+            onAdDismissedFullScreenContent: (ad) {},
+          );
+
+          setState(() {
+            _interstitialAd = ad;
+          });
+        },
+        onAdFailedToLoad: (err) {
+          print('Failed to load an interstitial ad: ${err.message}');
+        },
+      ),
     );
   }
+
+  // Widget _currentAd = SizedBox(
+  //   width: 0.0,
+  //   height: 0.0,
+  // );
+  //
+  // _showNativeAd() {
+  //   setState(() {
+  //     _currentAd = _nativeAd();
+  //   });
+  // }
+
+  // Widget _nativeAd() {
+  //   return FacebookNativeAd(
+  //     placementId: "1336093853816192_1336094377149473",
+  //     adType: NativeAdType.NATIVE_AD_VERTICAL,
+  //     width: double.infinity,
+  //     height: 300,
+  //     backgroundColor: Colors.blue,
+  //     titleColor: Colors.white,
+  //     descriptionColor: Colors.white,
+  //     buttonColor: Colors.deepPurple,
+  //     buttonTitleColor: Colors.white,
+  //     buttonBorderColor: Colors.white,
+  //     listener: (result, value) {
+  //       print("Native Ad: $result --> $value");
+  //     },
+  //     keepExpandedWhileLoading: true,
+  //     expandAnimationDuraion: 1000,
+  //   );
+  // }
 
   /// This function will lead us to browser to run a url.
   _launchURL(String url) async {
@@ -99,6 +121,14 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
+    final AdWidget adWidget = AdWidget(ad: myBanner);
+    final Container adContainer = Container(
+      alignment: Alignment.center,
+      child: adWidget,
+      width: myBanner.size.width.toDouble(),
+      height: myBanner.size.height.toDouble(),
+    );
+
     return Stack(children: [
       Scaffold(
         backgroundColor: Colors.white,
@@ -381,9 +411,9 @@ class _DashBoardState extends State<DashBoard> {
         padding: const EdgeInsets.only(top: 2),
         child: Align(
           alignment: Alignment(0, 1.0),
-          child: _currentAd,
+          child: adContainer,
         ),
-      )
+      ),
     ]);
   }
 }

@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'package:facebook_audience_network/facebook_audience_network.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'app_details.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
@@ -14,28 +16,45 @@ class AppsListScreen extends StatefulWidget {
 class _AppsListScreenState extends State<AppsListScreen> {
   final bool _showSystemApps = false;
   final bool _onlyLaunchableApps = false;
+  NativeAd? nativeAd;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue.shade700,
-      appBar: AppBar(
-
-        elevation: 0.0,
-        // shape: const RoundedRectangleBorder(
-        //   borderRadius: BorderRadius.vertical(
-        //     bottom: Radius.circular(30),
-        //   ),
-        // ),
-        backgroundColor: Colors.blue,
-        centerTitle: true,
-        title: const Text('Update Apps'),
-      ),
-      body: _AppsListScreenContent(
-          includeSystemApps: _showSystemApps,
-          onlyAppsWithLaunchIntent: _onlyLaunchableApps,
-          key: GlobalKey()),
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.blue.shade700,
+          appBar: AppBar(
+            elevation: 0.0,
+            // shape: const RoundedRectangleBorder(
+            //   borderRadius: BorderRadius.vertical(
+            //     bottom: Radius.circular(30),
+            //   ),
+            // ),
+            backgroundColor: Colors.blue,
+            centerTitle: true,
+            title: const Text('Update Apps'),
+          ),
+          body: _AppsListScreenContent(
+              includeSystemApps: _showSystemApps,
+              onlyAppsWithLaunchIntent: _onlyLaunchableApps,
+              key: GlobalKey()),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Align(
+            alignment: Alignment(0, 1.0),
+            child: _currentAd,
+          ),
+        )
+      ],
     );
   }
 }

@@ -1,3 +1,5 @@
+import 'package:google_mobile_ads/google_mobile_ads.dart';
+
 import 'pages/AppsListScreen.dart';
 import 'pages/SystemInfo.dart';
 import 'pages/UninstallAppsListScreen.dart';
@@ -7,6 +9,13 @@ import 'package:system_settings/system_settings.dart';
 import 'pages/SystemAppsListScreen.dart';
 
 void main() {
+
+
+
+
+  WidgetsFlutterBinding.ensureInitialized();
+  MobileAds.instance.initialize();
+
   runApp(const MyApp());
 }
 
@@ -21,8 +30,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: const DashBoard(
-      ),
+      home: const DashBoard(),
       debugShowCheckedModeBanner: false,
     );
   }

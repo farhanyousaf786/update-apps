@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'package:facebook_audience_network/ad/ad_native.dart';
+
 import 'app_details.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
@@ -16,24 +18,63 @@ class _UninstallAppsListScreen extends State<UninstallAppsListScreen> {
   bool _onlyLaunchableApps = false;
 
   @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue.shade600,
+  void initState() {
+    _showNativeBannerAd();
+    super.initState();
+  }
 
-      appBar: AppBar(
-        elevation: 0.0,
-        backgroundColor: Colors.blue,
-        centerTitle:  true,
-        title: const Text('Uninstall Apps',
-        style: TextStyle(
-          fontFamily: 'bal',
-          fontWeight: FontWeight.w700
-        ),),
-      ),
-      body: _AppsListScreenContent(
-          includeSystemApps: _showSystemApps,
-          onlyAppsWithLaunchIntent: _onlyLaunchableApps,
-          key: GlobalKey()),
+  Widget _currentAd = SizedBox(
+    width: 0.0,
+    height: 0.0,
+  );
+
+  _showNativeBannerAd() {
+    setState(() {
+      _currentAd = _nativeBannerAd();
+    });
+  }
+
+  Widget _nativeBannerAd() {
+    return FacebookNativeAd(
+      placementId: "1336093853816192_1336094837149427",
+      // placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2964953543583512",
+      adType: NativeAdType.NATIVE_BANNER_AD,
+      bannerAdSize: NativeBannerAdSize.HEIGHT_100,
+      height: 110,
+      listener: (result, value) {
+        print("Native Banner Ad: $result --> $value");
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        Scaffold(
+          backgroundColor: Colors.blue.shade600,
+          appBar: AppBar(
+            elevation: 0.0,
+            backgroundColor: Colors.blue,
+            centerTitle: true,
+            title: const Text(
+              'Uninstall Apps',
+              style: TextStyle(fontFamily: 'bal', fontWeight: FontWeight.w700),
+            ),
+          ),
+          body: _AppsListScreenContent(
+              includeSystemApps: _showSystemApps,
+              onlyAppsWithLaunchIntent: _onlyLaunchableApps,
+              key: GlobalKey()),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Align(
+            alignment: Alignment(0, 1.0),
+            child: _currentAd,
+          ),
+        )
+      ],
     );
   }
 }
@@ -74,13 +115,13 @@ class _AppsListScreenContent extends StatelessWidget {
                         ),
                         Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Text("Loading Apps..",
-                          style: TextStyle(
-                            fontWeight: FontWeight.w700,
-                            color: Colors.white
-                          ),),
+                          child: Text(
+                            "Loading Apps..",
+                            style: TextStyle(
+                                fontWeight: FontWeight.w700,
+                                color: Colors.white),
+                          ),
                         ),
-
                       ],
                     ),
                   );
@@ -229,19 +270,20 @@ class _AppsListScreenContent extends StatelessWidget {
                                           ],
                                         ),
                                         TextButton(
-                                          onPressed: () =>
-                                            app.uninstallApp(),
-
+                                          onPressed: () => app.uninstallApp(),
                                           style: ButtonStyle(
                                               backgroundColor:
                                                   MaterialStateProperty.all<
-                                                      Color>(Colors.blue.shade600,),
+                                                      Color>(
+                                                Colors.blue.shade600,
+                                              ),
                                               minimumSize: MaterialStateProperty
                                                   .all<Size>(const Size(
                                                       double.infinity, 40))),
                                           child: const Text(
                                             'Uninstall Application',
-                                            style: TextStyle(color: Colors.white),
+                                            style:
+                                                TextStyle(color: Colors.white),
                                           ),
                                         )
                                       ],

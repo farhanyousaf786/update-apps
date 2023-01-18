@@ -1,4 +1,6 @@
 import 'dart:typed_data';
+import 'package:facebook_audience_network/ad/ad_native.dart';
+
 import 'app_details.dart';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/material.dart';
@@ -17,27 +19,64 @@ class _SystemAppsListScreen extends State<SystemAppsListScreen> {
 
   @override
   void initState() {
-
+    _showNativeBannerAd();
     super.initState();
+  }
+
+  Widget _currentAd = SizedBox(
+    width: 0.0,
+    height: 0.0,
+  );
+
+  _showNativeBannerAd() {
+    setState(() {
+      _currentAd = _nativeBannerAd();
+    });
+  }
+
+  Widget _nativeBannerAd() {
+    return FacebookNativeAd(
+      placementId: "1336093853816192_1336094660482778",
+      // placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2964953543583512",
+      adType: NativeAdType.NATIVE_BANNER_AD,
+      bannerAdSize: NativeBannerAdSize.HEIGHT_100,
+      height: 110,
+      listener: (result, value) {
+        print("Native Banner Ad: $result --> $value");
+      },
+    );
   }
 
 
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.blue.shade600,
-      appBar: AppBar(
-        backgroundColor: Colors.blue,
-        elevation: 0.0,
+    return Stack(
 
-        centerTitle: true,
-        title: const Text('Update Apps'),
-      ),
-      body: _AppsListScreenContent(
-          includeSystemApps: _showSystemApps,
-          onlyAppsWithLaunchIntent: _onlyLaunchableApps,
-          key: GlobalKey()),
+      children: [
+        Scaffold(
+          backgroundColor: Colors.blue.shade600,
+          appBar: AppBar(
+            backgroundColor: Colors.blue,
+            elevation: 0.0,
+
+            centerTitle: true,
+            title: const Text('Update Apps'),
+          ),
+          body: _AppsListScreenContent(
+              includeSystemApps: _showSystemApps,
+              onlyAppsWithLaunchIntent: _onlyLaunchableApps,
+              key: GlobalKey()),
+        ),
+        Padding(
+          padding: const EdgeInsets.only(top: 2),
+          child: Align(
+            alignment: Alignment(0, 1.0),
+            child: _currentAd,
+          ),
+        )
+      ],
+
     );
   }
 }
