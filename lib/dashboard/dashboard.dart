@@ -20,7 +20,6 @@ class _DashBoardState extends State<DashBoard> {
   void initState() {
     FacebookAudienceNetwork.init();
     _loadInterstitialAd();
-    myBanner.load();
 
     // _showNativeAd();
     Future.delayed(const Duration(seconds: 10), () {
@@ -30,29 +29,30 @@ class _DashBoardState extends State<DashBoard> {
     super.initState();
   }
 
-  final BannerAd myBanner = BannerAd(
-    adUnitId: 'ca-app-pub-5525086149175557/9611255731',
-    size: AdSize.banner,
-    request: AdRequest(),
-    listener: BannerAdListener(),
-  );
+  NativeAd? nativeAd;
+  bool isNativeAdLoaded = false;
 
-  final BannerAdListener listener = BannerAdListener(
-    // Called when an ad is successfully received.
-    onAdLoaded: (Ad ad) => print('Ad loaded.'),
-    // Called when an ad request failed.
-    onAdFailedToLoad: (Ad ad, LoadAdError error) {
-      // Dispose the ad here to free resources.
-      ad.dispose();
-      print('Ad failed to load: $error');
-    },
-    // Called when an ad opens an overlay that covers the screen.
-    onAdOpened: (Ad ad) => print('Ad opened.'),
-    // Called when an ad removes an overlay that covers the screen.
-    onAdClosed: (Ad ad) => print('Ad closed.'),
-    // Called when an impression occurs on the ad.
-    onAdImpression: (Ad ad) => print('Ad impression.'),
-  );
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadNativeAd();
+  }
+
+  void loadNativeAd() {
+    nativeAd = NativeAd(
+      adUnitId: "ca-app-pub-5525086149175557/8247160687",
+      factoryId: "listTileMedium",
+      listener: NativeAdListener(onAdLoaded: (ad) {
+        setState(() {
+          isNativeAdLoaded = true;
+        });
+      }, onAdFailedToLoad: (ad, error) {
+        nativeAd!.dispose();
+      }),
+      request: const AdRequest(),
+    );
+    nativeAd!.load();
+  }
 
 // TODO: Add _interstitialAd
   InterstitialAd? _interstitialAd;
@@ -121,14 +121,6 @@ class _DashBoardState extends State<DashBoard> {
 
   @override
   Widget build(BuildContext context) {
-    final AdWidget adWidget = AdWidget(ad: myBanner);
-    final Container adContainer = Container(
-      alignment: Alignment.center,
-      child: adWidget,
-      width: myBanner.size.width.toDouble(),
-      height: myBanner.size.height.toDouble(),
-    );
-
     return Stack(children: [
       Scaffold(
         backgroundColor: Colors.white,
@@ -411,7 +403,17 @@ class _DashBoardState extends State<DashBoard> {
         padding: const EdgeInsets.only(top: 2),
         child: Align(
           alignment: Alignment(0, 1.0),
-          child: adContainer,
+          child: isNativeAdLoaded
+              ? Container(
+                  decoration: const BoxDecoration(
+                    color: Colors.transparent,
+                  ),
+                  height: 300,
+                  child: AdWidget(
+                    ad: nativeAd!,
+                  ),
+                )
+              : SizedBox(),
         ),
       ),
     ]);

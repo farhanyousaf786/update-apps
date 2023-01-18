@@ -16,14 +16,49 @@ class AppsListScreen extends StatefulWidget {
 class _AppsListScreenState extends State<AppsListScreen> {
   final bool _showSystemApps = false;
   final bool _onlyLaunchableApps = false;
-  NativeAd? nativeAd;
+  late final Container adContainer;
+
 
   @override
   void initState() {
     super.initState();
+    myBanner.load();
+    final AdWidget adWidget = AdWidget(ad: myBanner);
+    adContainer = Container(
+      alignment: Alignment.center,
+      child: adWidget,
+      width: myBanner.size.width.toDouble(),
+      height: myBanner.size.height.toDouble(),
+    );
+
+
+
   }
+  NativeAd? nativeAd;
+  bool isNativeAdLoaded = false;
 
+  final BannerAd myBanner = BannerAd(
+    adUnitId: '<ad unit ID>',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
+  );
 
+  void loadNativeAd() {
+    nativeAd = NativeAd(
+      adUnitId: "ca-app-pub-3940256099942544/6300978111",
+      factoryId: "listTileMedium",
+      listener: NativeAdListener(onAdLoaded: (ad) {
+        setState(() {
+          isNativeAdLoaded = true;
+        });
+      }, onAdFailedToLoad: (ad, error) {
+        nativeAd!.dispose();
+      }),
+      request: const AdRequest(),
+    );
+    nativeAd!.load();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -51,7 +86,10 @@ class _AppsListScreenState extends State<AppsListScreen> {
           padding: const EdgeInsets.only(top: 2),
           child: Align(
             alignment: Alignment(0, 1.0),
-            child: _currentAd,
+            child: Container(
+              height: 500,
+              child: adContainer,
+            ),
           ),
         )
       ],

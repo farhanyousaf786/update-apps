@@ -14,11 +14,11 @@ import java.util.Map;
 
 import io.flutter.plugins.googlemobileads.GoogleMobileAdsPlugin;
 
-class ListTileNativeAdFactory implements GoogleMobileAdsPlugin.NativeAdFactory {
+class NativeAdFactorySmall implements GoogleMobileAdsPlugin.NativeAdFactory {
 
     private final Context context;
 
-    ListTileNativeAdFactory(Context context) {
+    NativeAdFactorySmall(Context context) {
         this.context = context;
     }
 
