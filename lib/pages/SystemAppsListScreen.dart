@@ -1,5 +1,6 @@
 import 'dart:typed_data';
 import 'package:facebook_audience_network/ad/ad_native.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 
 import 'app_details.dart';
 import 'package:device_apps/device_apps.dart';
@@ -16,36 +17,32 @@ class SystemAppsListScreen extends StatefulWidget {
 class _SystemAppsListScreen extends State<SystemAppsListScreen> {
   bool _showSystemApps = false;
   bool _onlyLaunchableApps = false;
+  late final Container adContainer;
+
+
 
   @override
   void initState() {
-    _showNativeBannerAd();
     super.initState();
-  }
+    myBanner.load();
+    final AdWidget adWidget = AdWidget(ad: myBanner);
+    adContainer = Container(
+      alignment: Alignment.center,
+      child: adWidget,
+      width: myBanner.size.width.toDouble(),
+      height: myBanner.size.height.toDouble(),
+    );
 
-  Widget _currentAd = SizedBox(
-    width: 0.0,
-    height: 0.0,
+  }
+  NativeAd? nativeAd;
+
+  final BannerAd myBanner = BannerAd(
+    adUnitId: 'ca-app-pub-5525086149175557/4225306575',
+    size: AdSize.banner,
+    request: AdRequest(),
+    listener: BannerAdListener(),
   );
 
-  _showNativeBannerAd() {
-    setState(() {
-      _currentAd = _nativeBannerAd();
-    });
-  }
-
-  Widget _nativeBannerAd() {
-    return FacebookNativeAd(
-      placementId: "1336093853816192_1336094660482778",
-      // placementId: "IMG_16_9_APP_INSTALL#2312433698835503_2964953543583512",
-      adType: NativeAdType.NATIVE_BANNER_AD,
-      bannerAdSize: NativeBannerAdSize.HEIGHT_100,
-      height: 110,
-      listener: (result, value) {
-        print("Native Banner Ad: $result --> $value");
-      },
-    );
-  }
 
 
 
@@ -72,7 +69,10 @@ class _SystemAppsListScreen extends State<SystemAppsListScreen> {
           padding: const EdgeInsets.only(top: 2),
           child: Align(
             alignment: Alignment(0, 1.0),
-            child: _currentAd,
+            child: Container(
+              height: 90,
+              child: adContainer,
+            ),
           ),
         )
       ],

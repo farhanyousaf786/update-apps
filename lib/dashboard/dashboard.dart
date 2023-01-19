@@ -16,31 +16,23 @@ class DashBoard extends StatefulWidget {
 }
 
 class _DashBoardState extends State<DashBoard> {
+
+
   @override
   void initState() {
-    FacebookAudienceNetwork.init();
     _loadInterstitialAd();
-
-    // _showNativeAd();
-    Future.delayed(const Duration(seconds: 10), () {
+    loadNativeAd();
+    Future.delayed(const Duration(seconds: 40), () {
       _interstitialAd?.show();
     });
-
     super.initState();
   }
 
   NativeAd? nativeAd;
   bool isNativeAdLoaded = false;
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    loadNativeAd();
-  }
-
   void loadNativeAd() {
     nativeAd = NativeAd(
-      adUnitId: "ca-app-pub-5525086149175557/8247160687",
+      adUnitId: "ca-app-pub-5525086149175557/1275709602",
       factoryId: "listTileMedium",
       listener: NativeAdListener(onAdLoaded: (ad) {
         setState(() {
@@ -49,23 +41,22 @@ class _DashBoardState extends State<DashBoard> {
       }, onAdFailedToLoad: (ad, error) {
         nativeAd!.dispose();
       }),
-      request: const AdRequest(),
+      request:  AdRequest(),
     );
     nativeAd!.load();
   }
 
-// TODO: Add _interstitialAd
   InterstitialAd? _interstitialAd;
-
-  // TODO: Implement _loadInterstitialAd()
   void _loadInterstitialAd() {
     InterstitialAd.load(
-      adUnitId: "ca-app-pub-5525086149175557/3237419076",
+      adUnitId: "ca-app-pub-5525086149175557/2410781581",
       request: AdRequest(),
       adLoadCallback: InterstitialAdLoadCallback(
         onAdLoaded: (ad) {
           ad.fullScreenContentCallback = FullScreenContentCallback(
-            onAdDismissedFullScreenContent: (ad) {},
+            onAdDismissedFullScreenContent: (ad) {
+
+            },
           );
 
           setState(() {
@@ -79,36 +70,6 @@ class _DashBoardState extends State<DashBoard> {
     );
   }
 
-  // Widget _currentAd = SizedBox(
-  //   width: 0.0,
-  //   height: 0.0,
-  // );
-  //
-  // _showNativeAd() {
-  //   setState(() {
-  //     _currentAd = _nativeAd();
-  //   });
-  // }
-
-  // Widget _nativeAd() {
-  //   return FacebookNativeAd(
-  //     placementId: "1336093853816192_1336094377149473",
-  //     adType: NativeAdType.NATIVE_AD_VERTICAL,
-  //     width: double.infinity,
-  //     height: 300,
-  //     backgroundColor: Colors.blue,
-  //     titleColor: Colors.white,
-  //     descriptionColor: Colors.white,
-  //     buttonColor: Colors.deepPurple,
-  //     buttonTitleColor: Colors.white,
-  //     buttonBorderColor: Colors.white,
-  //     listener: (result, value) {
-  //       print("Native Ad: $result --> $value");
-  //     },
-  //     keepExpandedWhileLoading: true,
-  //     expandAnimationDuraion: 1000,
-  //   );
-  // }
 
   /// This function will lead us to browser to run a url.
   _launchURL(String url) async {
@@ -141,20 +102,20 @@ class _DashBoardState extends State<DashBoard> {
                 fontSize: 20,
                 fontFamily: 'bal'),
           ),
-          actions: [
-            GestureDetector(
-              onTap: () => {
-                _launchURL("https://sites.google.com/view/updateallapps/home"),
-              },
-              child: const Padding(
-                padding: EdgeInsets.only(bottom: 4, right: 10, top: 4),
-                child: Icon(
-                  Icons.info_outline,
-                  color: Colors.white,
-                ),
-              ),
-            )
-          ],
+          // actions: [
+          //   GestureDetector(
+          //     onTap: () => {
+          //       _launchURL("https://sites.google.com/view/updateallapps/home"),
+          //     },
+          //     child: const Padding(
+          //       padding: EdgeInsets.only(bottom: 4, right: 10, top: 4),
+          //       child: Icon(
+          //         Icons.info_outline,
+          //         color: Colors.white,
+          //       ),
+          //     ),
+          //   )
+          // ],
         ),
         body: Container(
           decoration: BoxDecoration(
@@ -177,6 +138,8 @@ class _DashBoardState extends State<DashBoard> {
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: TextButton(
                               onPressed: () {
+                                _interstitialAd?.show();
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) => AppsListScreen()));
                               },
@@ -211,6 +174,8 @@ class _DashBoardState extends State<DashBoard> {
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: TextButton(
                               onPressed: () {
+                                _interstitialAd?.show();
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         SystemAppsListScreen()));
@@ -251,6 +216,8 @@ class _DashBoardState extends State<DashBoard> {
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: TextButton(
                               onPressed: () {
+                                _interstitialAd?.show();
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         UninstallAppsListScreen()));
@@ -286,6 +253,8 @@ class _DashBoardState extends State<DashBoard> {
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: TextButton(
                               onPressed: () {
+                                _interstitialAd?.show();
+
                                 SystemSettings.deviceInfo();
                               },
                               child: Material(
@@ -324,6 +293,8 @@ class _DashBoardState extends State<DashBoard> {
                             width: MediaQuery.of(context).size.width / 2.5,
                             child: TextButton(
                               onPressed: () {
+                                _interstitialAd?.show();
+
                                 Navigator.of(context).push(MaterialPageRoute(
                                     builder: (context) =>
                                         const DeviceInfoScreen()));

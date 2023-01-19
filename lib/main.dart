@@ -1,20 +1,17 @@
 import 'package:google_mobile_ads/google_mobile_ads.dart';
-
-import 'pages/AppsListScreen.dart';
-import 'pages/SystemInfo.dart';
-import 'pages/UninstallAppsListScreen.dart';
 import 'package:app_updates/dashboard/dashboard.dart';
 import 'package:flutter/material.dart';
-import 'package:system_settings/system_settings.dart';
-import 'pages/SystemAppsListScreen.dart';
 
-void main() {
-
+String? version;
+List<String> testDeviceIds = ['1ABD59FEDD8208ABF827341092618E9D'];
 
 
-
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   MobileAds.instance.initialize();
+  RequestConfiguration configuration =
+  RequestConfiguration(testDeviceIds: testDeviceIds);
+  MobileAds.instance.updateRequestConfiguration(configuration);
 
   runApp(const MyApp());
 }

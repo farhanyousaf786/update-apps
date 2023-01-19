@@ -2,6 +2,7 @@ import 'dart:typed_data';
 import 'package:device_apps/device_apps.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:google_mobile_ads/google_mobile_ads.dart';
 import 'package:store_redirect/store_redirect.dart';
 import 'package:facebook_audience_network/facebook_audience_network.dart';
 
@@ -17,75 +18,33 @@ class AppDetailsScreen extends StatefulWidget {
 }
 
 class _AppDetailsScreenState extends State<AppDetailsScreen> {
+
+  NativeAd? nativeAd;
+  bool isNativeAdLoaded = false;
+
   @override
-  void initState() {
-    _showNativeAd();
-    _loadInterstitialAd();
-
-    super.initState();
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    loadNativeAd();
   }
 
-  Widget _currentAd = SizedBox(
-    width: 0.0,
-    height: 0.0,
-  );
-
-  _showNativeAd() {
-    setState(() {
-      _currentAd = _nativeAd();
-    });
-  }
-
-  Widget _nativeAd() {
-    return FacebookNativeAd(
-      placementId: "1336093853816192_1336112967147614",
-      adType: NativeAdType.NATIVE_AD_VERTICAL,
-      width: double.infinity,
-      height: 300,
-      backgroundColor: Colors.blue,
-      titleColor: Colors.white,
-      descriptionColor: Colors.white,
-      buttonColor: Colors.deepPurple,
-      buttonTitleColor: Colors.white,
-      buttonBorderColor: Colors.white,
-      listener: (result, value) {
-        print("Native Ad: $result --> $value");
-      },
-      keepExpandedWhileLoading: true,
-      expandAnimationDuraion: 1000,
+  void loadNativeAd() {
+    nativeAd = NativeAd(
+      adUnitId: "ca-app-pub-5525086149175557/5729959934",
+      factoryId: "listTileMedium",
+      listener: NativeAdListener(onAdLoaded: (ad) {
+        setState(() {
+          isNativeAdLoaded = true;
+        });
+      }, onAdFailedToLoad: (ad, error) {
+        nativeAd!.dispose();
+      }),
+      request: const AdRequest(),
     );
+    nativeAd!.load();
   }
 
 
-  bool _isInterstitialAdLoaded = false;
-
-  void _loadInterstitialAd() {
-    FacebookInterstitialAd.loadInterstitialAd(
-      placementId: "1336093853816192_1336119097147001",
-      listener: (result, value) {
-        print(">> FAN > Interstitial Ad: $result --> $value");
-        if (result == InterstitialAdResult.LOADED)
-          _isInterstitialAdLoaded = true;
-
-        /// Once an Interstitial Ad has been dismissed and becomes invalidated,
-        /// load a fresh Ad by calling this function.
-        if (result == InterstitialAdResult.DISMISSED &&
-            value["invalidated"] == true) {
-          _isInterstitialAdLoaded = false;
-          _loadInterstitialAd();
-        }
-      },
-    );
-  }
-
-  _showInterstitialAd() {
-    if (_isInterstitialAdLoaded == true)
-      FacebookInterstitialAd.showInterstitialAd();
-    else{
-      StoreRedirect.redirect(
-          androidAppId: widget.application.packageName);
-      print("Interstial Ad not yet loaded!");}
-  }
   @override
   Widget build(BuildContext context) {
     // if(DeviceApps.getApp(application.packageName,true)==ApplicationWithIcon){
@@ -212,7 +171,6 @@ class _AppDetailsScreenState extends State<AppDetailsScreen> {
                         ),
                         TextButton(
                           onPressed: () {
-                            _showInterstitialAd();
                             StoreRedirect.redirect(
                                 androidAppId: widget.application.packageName);
                           },
@@ -374,7 +332,17 @@ class _AppDetailsScreenState extends State<AppDetailsScreen> {
                 padding: const EdgeInsets.only(top: 2),
                 child: Align(
                   alignment: Alignment(0, 1.0),
-                  child: _currentAd,
+                  child: isNativeAdLoaded
+                      ? Container(
+                    decoration: const BoxDecoration(
+                      color: Colors.transparent,
+                    ),
+                    height: 300,
+                    child: AdWidget(
+                      ad: nativeAd!,
+                    ),
+                  )
+                      : SizedBox(),
                 ),
               ),
             ],

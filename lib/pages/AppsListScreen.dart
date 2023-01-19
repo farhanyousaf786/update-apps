@@ -31,34 +31,17 @@ class _AppsListScreenState extends State<AppsListScreen> {
       height: myBanner.size.height.toDouble(),
     );
 
-
-
   }
   NativeAd? nativeAd;
   bool isNativeAdLoaded = false;
 
   final BannerAd myBanner = BannerAd(
-    adUnitId: '<ad unit ID>',
+    adUnitId: 'ca-app-pub-5525086149175557/5618279291',
     size: AdSize.banner,
     request: AdRequest(),
     listener: BannerAdListener(),
   );
 
-  void loadNativeAd() {
-    nativeAd = NativeAd(
-      adUnitId: "ca-app-pub-3940256099942544/6300978111",
-      factoryId: "listTileMedium",
-      listener: NativeAdListener(onAdLoaded: (ad) {
-        setState(() {
-          isNativeAdLoaded = true;
-        });
-      }, onAdFailedToLoad: (ad, error) {
-        nativeAd!.dispose();
-      }),
-      request: const AdRequest(),
-    );
-    nativeAd!.load();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -87,7 +70,7 @@ class _AppsListScreenState extends State<AppsListScreen> {
           child: Align(
             alignment: Alignment(0, 1.0),
             child: Container(
-              height: 500,
+              height: 90,
               child: adContainer,
             ),
           ),
